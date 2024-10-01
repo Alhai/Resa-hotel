@@ -1,5 +1,5 @@
 const mysql = require('mysql2');
-const dbConfig = require('../mysqlConf');
+const dbConfig = require('../../mysqlConf');
 
 
 // Créez une pool de connexions
@@ -19,7 +19,7 @@ function testBdd(username) {
                 reject(err);
             } else {
                 const row = result[0];
-                let data = { name: row.username, id: row.user_id, avatar: row.email,avatar: row.role };
+                let data = { name: row.username, id: row.user_id, email: row.email,role: row.role };
                 resolve(data);
             }
         });
