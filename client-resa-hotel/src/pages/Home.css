@@ -1,0 +1,82 @@
+/* Hero section améliorée */
+.hero {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Augmenter l'opacité pour améliorer la lisibilité */
+  }
+  
+  .hero-text {
+    position: relative;
+    z-index: 1;
+    max-width: 800px; /* Ajuster la largeur du texte */
+  }
+  
+  .hero h1 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  .hero p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  /* Highlight section améliorée */
+  .highlight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+    background-color: #f4f4f4;
+  }
+  
+  .highlight-content {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    gap: 30px;
+    padding: 20px;
+  }
+  
+  .highlight img {
+    width: 50%;
+    border-radius: 10px;
+  }
+  
+  .highlight-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .highlight-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+  
+  .highlight-text p {
+    font-size: 1.2rem;
+    color: #666;
+    line-height: 1.8;
+  }
+  
