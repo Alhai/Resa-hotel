@@ -1,17 +1,5 @@
-const mysql = require('mysql2');
-const dbConfig = require('../../mysqlConf');
-
-
-// Créez une pool de connexions
-const connection = mysql.createPool(dbConfig);
-
-// Gérer les erreurs de la base de données
-connection.on('error', (err) => {
-    console.error('Database error:', err);
-});
-
 /** Test accès à la BDD **/
-function testBdd(username) {
+function testBdd(username, connection) {
     const queryCheckPseudo = 'SELECT * FROM user WHERE username = ?';
     return new Promise((resolve, reject) => {
         connection.query(queryCheckPseudo, [username], (err, result) => {
