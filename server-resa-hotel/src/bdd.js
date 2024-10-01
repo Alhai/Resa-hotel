@@ -12,14 +12,14 @@ connection.on('error', (err) => {
 
 /** Test accès à la BDD **/
 function testBdd(username) {
-    const queryCheckPseudo = 'SELECT * FROM users WHERE username = ?';
+    const queryCheckPseudo = 'SELECT * FROM user WHERE username = ?';
     return new Promise((resolve, reject) => {
         connection.query(queryCheckPseudo, [username], (err, result) => {
             if (err) {
                 reject(err);
             } else {
                 const row = result[0];
-                let data = { pseudo: row.pseudo, id: row.id, avatar: row.avatar };
+                let data = { name: row.username, id: row.user_id, avatar: row.email,avatar: row.role };
                 resolve(data);
             }
         });

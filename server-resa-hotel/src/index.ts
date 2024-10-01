@@ -1,7 +1,7 @@
 import express from 'express';
 const {
   TestLoginBDD,
-} = require('./src/bdd');
+} = require('./bdd');
 
 const app = express();
 const port = 3000;
