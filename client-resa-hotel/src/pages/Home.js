@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import heroImage from '../assets/images/hero.jpg'; // Image d'accueil
 import roomImage from '../assets/images/room.jpg'; // Image des chambres
 import restaurantImage from '../assets/images/restaurant.jpg'; // Image du restaurant
@@ -6,17 +6,24 @@ import poolImage from '../assets/images/pool.jpg'; // Image de la piscine
 import './Home.css'; // Import du fichier CSS
 
 const Home = () => {
+  useEffect(() => {
+    // Ajoute une classe d'animation avec un léger délai
+    const serviceItems = document.querySelectorAll('.service-item');
+    serviceItems.forEach((item, index) => {
+      item.style.animationDelay = `${index * 0.3}s`; // Ajoute un délai entre les éléments
+      item.classList.add('fade-in');
+    });
+  }, []);
+
   return (
     <div className="home">
       {/* Hero Section */}
       <section className="hero" style={{ backgroundImage: `url(${heroImage})` }}>
-  <div className="hero-content">
-    <h1>Bienvenue à Resa-Hotel</h1>
-    <p>Offrez-vous un séjour dans un hôtel de luxe avec des services exceptionnels.</p>
-  </div>
-</section>
-
-
+        <div className="hero-content">
+          <h1>Bienvenue à Resa-Hotel</h1>
+          <p>Offrez-vous un séjour dans un hôtel de luxe avec des services exceptionnels.</p>
+        </div>
+      </section>
 
       {/* Services Section */}
       <section className="services">
