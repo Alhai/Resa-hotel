@@ -1,82 +1,157 @@
-/* Hero section améliorée */
-.hero {
-    background-size: cover;
-    background-position: center;
+/* Style de base pour la navbar */
+.navbar {
+  background-color: #2c3e50; /* Un bleu foncé élégant */
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajoute une ombre subtile */
+  position: fixed; /* Navbar fixée en haut */
+  width: 100%;
+  top: 0;
+  z-index: 10;
+  flex-wrap: wrap; /* Permet de répartir les éléments sur plusieurs lignes si nécessaire */
+}
+
+/* Logo de la navbar */
+.navbar-logo a {
+  color: #ecf0f1; /* Gris clair */
+  font-size: 28px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.navbar-logo a:hover {
+  transform: scale(1.1); /* Agrandit légèrement le logo */
+}
+
+/* Liens de navigation */
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Permet de passer sur plusieurs lignes si nécessaire */
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: #ecf0f1; /* Gris clair */
+  text-decoration: none;
+  font-size: 18px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect pour les liens */
+.navbar-links a:hover {
+  color: #e74c3c; /* Rouge élégant */
+  transform: translateY(-2px); /* Soulève légèrement le lien */
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Lien actif */
+.navbar-links a.active {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar-links {
+    justify-content: space-around;
     width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    position: relative;
-    font-family: 'Arial', sans-serif;
   }
-  
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6); /* Augmenter l'opacité pour améliorer la lisibilité */
-  }
-  
-  .hero-text {
-    position: relative;
-    z-index: 1;
-    max-width: 800px; /* Ajuster la largeur du texte */
-  }
-  
-  .hero h1 {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  .hero p {
-    font-size: 1.5rem;
-    line-height: 1.6;
-  }
-  
-  /* Highlight section améliorée */
-  .highlight {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 50px 0;
-    background-color: #f4f4f4;
-  }
-  
-  .highlight-content {
-    display: flex;
-    flex-direction: row;
-    max-width: 1200px;
-    gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
     padding: 20px;
   }
-  
-  .highlight img {
-    width: 50%;
-    border-radius: 10px;
+
+  .navbar-links {
+    flex-direction: column; /* Aligne les liens en colonne sur mobile */
+    gap: 15px;
+    width: 100%;
   }
-  
-  .highlight-text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: 'Arial', sans-serif;
+
+  .navbar-logo {
+    margin-bottom: 10px;
   }
-  
-  .highlight-text h2 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
+}
+
+
+.hero {
+  background-image: url('../assets/images/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.hero-content {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+
+.services {
+  padding: 50px 0;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+
+.service-list {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.service-item {
+  width: 30%;
+  margin-bottom: 30px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-item img {
+  width: 100%; /* L'image occupe 100% de la largeur du conteneur */
+  height: auto; /* Maintient le ratio de l'image */
+  max-height: 200px; /* Limite la hauteur de l'image à 200px */
+  border-radius: 10px;
+  object-fit: cover; /* Garde les proportions de l'image tout en remplissant le conteneur */
+}
+
+.service-item h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.service-item p {
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .service-item {
+    width: 80%; /* Prend plus de place sur les petits écrans */
   }
-  
-  .highlight-text p {
-    font-size: 1.2rem;
-    color: #666;
-    line-height: 1.8;
+
+  .hero {
+    height: 40vh; /* Réduit la hauteur de la section Hero sur mobile */
   }
-  
+}
