@@ -20,8 +20,13 @@ export class ChambresService {
 
 
 
-    createChambre = async (ChambreData: CreateChambreModelDTO): Promise<ChambreModel> => {
-        return await this.chambresDal.create(ChambreData);
+    createChambre = async (ChambreData: any): Promise<ChambreModel | null> => {
+        try {
+            return await this.chambresDal.create(ChambreData);
+        } catch (error: any) {
+            console.error(`Error creating chambre :`, error);
+            throw new Error(`An error occurred while fetching the chambre: ${error.message}`);
+        }
     };
 }
 
