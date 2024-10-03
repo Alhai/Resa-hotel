@@ -30,7 +30,7 @@ export class ChambresController {
 
     createChambre = async (req: Request, res: Response): Promise<void> => {
         try {
-            const chambre = await this.chambresService.createChambre(req.body);
+            const chambre = await this.chambresService.createChambre(req.query);
             res.status(201).json(chambre);
         } catch (error: any) {
             res.status(500).json({message: error.message});

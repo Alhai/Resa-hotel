@@ -9,7 +9,7 @@ export class ChambresDal {
     }
     async findAll() {
         let page = 1;
-        const limit = 10; // Nombre de trajets par page
+        const limit = 10;
         let allRows: any[] = [];
         let hasMoreData = true;
 
@@ -56,31 +56,51 @@ export class ChambresDal {
             });
 
             if (rows) {
-                return rows; // Assuming only one chambre with the given ID is expected
+                return rows;
             } else {
-                console.log(rows);
-                return null; // Chambre not found
+                return null;
             }
         } catch (err: any) {
             console.error('Error fetching chambre:', err.message);
-            throw err; // Rethrow the error for proper handling in the calling code
+            throw err;
         }
     }
 
 
-    async create(modelData: CreateChambreModelDTO): Promise<ChambreModel> {
-        const result = await this.db.query('INSERT INTO chambre (hotel_id, num, type, description, size, price, is_available) VALUES (?, ?, ?, ?, ?, ?, ?)', [
-            modelData.hotel_id,
-            modelData.num,
-            modelData.type,
-            modelData.description,
-            modelData.size,
-            modelData.price,
-            modelData.is_available,
-        ]);
-        return {
-            chambre_id: result[0].insertId,
-            ...modelData,
-        };
-    };
+    async create(modelData: CreateChambreModelDTO): Promise<ChambreModel | null> {
+        try {
+            const queryAddRoom = 'INSERT INTO chambre (hotel_id, num, type, description, size, price, is_available) VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+            const result: any = await new Promise((resolve, reject) => {
+                this.db.query(queryAddRoom, [
+                    modelData.hotel_id,
+                    modelData.num,
+                    modelData.type,
+                    modelData.description,
+                    modelData.size,
+                    modelData.price,
+                    modelData.is_available
+                ], (err: any, result: any) => {
+                    if (err) {
+                        console.error('Database query error:', err);
+                        return reject({ message: err.message });
+                    }
+                    resolve(result);
+                });
+            });
+
+            if (result) {
+                return {
+                    chambre_id: result.insertId,
+                    ...modelData,
+                };
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error creating chambre:', error);
+            throw error;
+        }
+    }
+
 }

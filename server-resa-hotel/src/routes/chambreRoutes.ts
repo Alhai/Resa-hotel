@@ -10,8 +10,8 @@ const chambresRepository = new ChambresDal(bdd);
 const chambresService = new ChambresService(chambresRepository);
 const chambresController = new ChambresController(chambresService);
 
-router.get('/', chambresController.getAllChambres);
+router.get('/new/', chambresController.createChambre);
 router.get('/:id', chambresController.getChambreById);
-router.post('/new/', chambresController.createChambre);
+router.get('/', chambresController.getAllChambres);
 
 export default router;
