@@ -1,0 +1,60 @@
+.restaurant-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  flex-wrap: wrap;
+}
+
+.header {
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.description {
+  flex: 1;
+  margin-right: 30px;
+}
+
+.image-box {
+  flex: 0 0 400px; /* Fixed width for image box */
+}
+
+.image-box img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-images {
+  margin-top: 40px;
+}
+
+.image-gallery {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-gallery img {
+  width: 200px;
+  height: auto;
+  margin-right: 15px; /* Space between images */
+  padding: 5px 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-gallery img:last-child {
+  margin-right: 0; /* Remove margin for the last image */
+}
