@@ -1,106 +1,84 @@
 /** Test accès à la BDD **/
-import {Bdd} from '../../bdd';
-import {ChambreModel, CreateChambreModelDTO} from '../models/chambre-model';
+import { pool } from '../config/config';
+import {ChambreInterface} from '../interfaces/chambre-interface';
 
 export class ChambresDal {
-    private db:any;
-    constructor(private bdd:Bdd) {
-        this.db = this.bdd.connection();
-    }
-    async findAll() {
+    async findAll(): Promise<ChambreInterface[]> {
         let page = 1;
         const limit = 10;
-        let allRows: any[] = [];
+        let allRows: ChambreInterface[] = [];
         let hasMoreData = true;
 
         while (hasMoreData) {
             const offset = (page - 1) * limit;
             const querySelectAllRoom = 'SELECT * FROM chambre LIMIT ? OFFSET ?';
+
             try {
-                const rows: any = await new Promise((resolve, reject) => {
-                    this.db.query(querySelectAllRoom, [limit, offset], (err:any, rows:any) => {
-                        if (err) {
-                            console.error('Database query error:', err);
-                            return reject({message: err.message});
-                        }
-                        resolve(rows);
-                    });
-                });
+                // Utiliser pool.promise() pour les Promises avec MySQL2
+                const [rows]: any = await pool.query(querySelectAllRoom, [limit, offset]);
 
                 if (rows.length > 0) {
                     allRows = allRows.concat(rows);
                     page++;
                 } else {
-                    hasMoreData = false;
+                    hasMoreData = false; // Arrêter si aucune donnée n'est retournée
                 }
-            } catch (err: any) {
-                console.error('Erreur lors de la récupération des données:', err.message);
-                return {message: err.message};
+            } catch (error: any) {
+                console.error('Error fetching rooms:', error);
+                throw new Error(`An error occurred while fetching rooms: ${error.message}`);
             }
         }
 
-        return {message: 'yes', data: allRows};
+        return allRows;
     }
 
-    async findById(chambreId: number): Promise<ChambreModel | null> {
-        try {
+    async findById(chambreId: number): Promise<ChambreInterface | null> {
             const querySelectRoomById = 'SELECT * FROM chambre WHERE chambre_id = ?';
-            const [rows]:any = await new Promise((resolve, reject) => {
-                this.db.query(querySelectRoomById, [chambreId], (err: any, rows: any) => {
-                    if (err) {
-                        console.error('Database query error:', err);
-                        return reject({ message: err.message });
-                    }
-                    resolve(rows);
-                });
-            });
-
-            if (rows) {
-                return rows;
+            const [rows] = await pool.query(querySelectRoomById, [chambreId]);
+            const result: any[] = rows as any[];
+            if (result.length > 0) {
+                return result[0] as ChambreInterface;
             } else {
-                return null;
+                throw new Error(`la chambre avec l'ID ${chambreId} non trouvé`);
             }
-        } catch (err: any) {
-            console.error('Error fetching chambre:', err.message);
-            throw err;
-        }
     }
 
+    async addChambre(chambre: ChambreInterface): Promise<void> {
+        const queryAddRoom = 'INSERT INTO chambre (hotel_id, num, type, description, size, price, is_available) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-    async create(modelData: CreateChambreModelDTO): Promise<ChambreModel | null> {
-        try {
-            const queryAddRoom = 'INSERT INTO chambre (hotel_id, num, type, description, size, price, is_available) VALUES (?, ?, ?, ?, ?, ?, ?)';
-
-            const result: any = await new Promise((resolve, reject) => {
-                this.db.query(queryAddRoom, [
-                    modelData.hotel_id,
-                    modelData.num,
-                    modelData.type,
-                    modelData.description,
-                    modelData.size,
-                    modelData.price,
-                    modelData.is_available
-                ], (err: any, result: any) => {
-                    if (err) {
-                        console.error('Database query error:', err);
-                        return reject({ message: err.message });
-                    }
-                    resolve(result);
-                });
-            });
-
-            if (result) {
-                return {
-                    chambre_id: result.insertId,
-                    ...modelData,
-                };
-            } else {
-                return null;
-            }
-        } catch (error) {
-            console.error('Error creating chambre:', error);
-            throw error;
-        }
+        await pool.query(queryAddRoom, [
+            chambre.hotel_id,
+            chambre.num,
+            chambre.type,
+            chambre.description,
+            chambre.size,
+            chambre.price,
+            chambre.is_available
+        ]);
     }
 
+    async updateChambre(chambre: ChambreInterface): Promise<void> {
+        const query = `
+            UPDATE chambre
+            SET hotel_id = ?, num = ?, type = ?, description = ?, size = ?, price = ?, is_available = ?
+            WHERE chambre_id = ?
+        `;
+        const values = [
+            chambre.hotel_id,
+            chambre.num,
+            chambre.type,
+            chambre.description,
+            chambre.size,
+            chambre.price,
+            chambre.is_available,
+            chambre.chambre_id
+        ];
+
+        await pool.query(query, values);
+    }
+    async deleteChambre(chambreId: number): Promise<void> {
+        console.log(chambreId);
+        const querySelectRoomById = 'DELETE FROM chambre WHERE chambre_id = ?';
+        await pool.query(querySelectRoomById, [chambreId]);
+    }
 }

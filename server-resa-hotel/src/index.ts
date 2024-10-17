@@ -1,6 +1,5 @@
 import express from 'express';
-import ChambreRoutes from "./routes/chambreRoutes";
-import chambreRoutes from "./routes/chambreRoutes";
+import chambreRoutes from "./router/chambre.router";
 import userRouter from './router/user.router';
 // const {
 //   TestLoginBDD,
@@ -9,7 +8,7 @@ import userRouter from './router/user.router';
 const app = express();
 const port = 3000;
 // import {Bdd} from '../bdd';
-
+app.use(express.json());
 
 app.use('/user', userRouter);
 
@@ -33,21 +32,6 @@ app.get('/', (req, res) => {
 /** Récupération de l'ensemble des chambres **/
 app.use('/chambres', chambreRoutes);
 
-/*app.get('/chambres', async (req:any, res:any) => {
-  console.log('Récupération des chambres');
-  try {
-    const connexion = await getAllRoom(connection);
-
-    if (connexion.message === 'yes')
-      return res.json(connexion.data);
-    else
-      return res.status(500).json(connexion.message);
-
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send(err);
-  }
-});*/
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

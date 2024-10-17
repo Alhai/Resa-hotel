@@ -1,31 +1,27 @@
-import {
-    IUser
-} from "../interfaces/user-interface";
-import { UserDal } from "../dals/users-dal";
+import {IUser} from "../interfaces/user-interface";
+import {UserDal} from "../dals/users-dal";
 
 export class UserService {
 
     constructor(private userDal: UserDal) { }
 
-    addUser(user: IUser): Promise<void> {
-        return this.userDal.addUser(user);
+    async addUser(user: IUser): Promise<void> {
+        return await this.userDal.addUser(user);
     }
 
-    getAllUsers(): Promise<IUser[]> {
-        const allUser = this.userDal.getAllUsers();
-        return allUser;
+    async getAllUsers(): Promise<IUser[]> {
+        return await this.userDal.getAllUsers();
     }
 
-    getUserById(userId: number): Promise<IUser> {
-        const oneUser = this.userDal.getUserById(userId);
-        return oneUser;
+    async getUserById(userId: number): Promise<IUser> {
+        return await this.userDal.getUserById(userId);
     }
 
-    updateUser(user: IUser): Promise<void> {
-        return this.userDal.updateUser(user);
+    async updateUser(user: IUser): Promise<void> {
+        return await this.userDal.updateUser(user);
     }
 
-    deleteUser(userId: number): Promise<void> {
-        return this.userDal.deleteUser(userId);
+    async deleteUser(userId: number): Promise<void> {
+        return await this.userDal.deleteUser(userId);
     }
 }
