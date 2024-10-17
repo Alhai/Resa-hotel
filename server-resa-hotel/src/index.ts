@@ -1,10 +1,17 @@
 import express from 'express';
 import ChambreRoutes from "./routes/chambreRoutes";
 import chambreRoutes from "./routes/chambreRoutes";
+import userRouter from './router/user.router';
+// const {
+//   TestLoginBDD,
+// } = require('./services/bdd');
+
 const app = express();
 const port = 3000;
 // import {Bdd} from '../bdd';
 
+
+app.use('/user', userRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -15,7 +22,7 @@ app.get('/', (req, res) => {
 /*app.get('/loginTest/:user', async (req, res) => {
   console.log('Lancement du test connexion BDD');
   try {
-    const result = await Bdd.TestLoginBDD(req.params.user);
+    const result = await TestLoginBDD(req.params.user);
     res.send(result);
   } catch (err) {
     console.error(err);
