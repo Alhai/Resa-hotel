@@ -1,32 +1,30 @@
 import {ChambresDal} from '../dals/chambres-dal';
-import {ChambreModel, CreateChambreModelDTO} from '../models/chambre-model';
+import {ChambreInterface} from '../interfaces/chambre-interface';
 
 export class ChambresService {
     constructor(private chambresDal:ChambresDal) {
     }
 
-    getAllChambres = async (): Promise<{ message: any } | { data: any[]; message: string }> => {
+    getAllChambres = async (): Promise<ChambreInterface[]> => {
         return await this.chambresDal.findAll();
     };
 
-    getChambreById = async (id: number): Promise<ChambreModel | null> => {
-        try {
-            return await this.chambresDal.findById(id);
-        } catch (error: any) {
-            console.error(`Error fetching chambre with ID ${id}:`, error);
-            throw new Error(`An error occurred while fetching the chambre: ${error.message}`);
-        }
+    getChambreById = async (id: number): Promise<ChambreInterface | null> => {
+        return await this.chambresDal.findById(id);
     };
 
 
 
-    createChambre = async (ChambreData: any): Promise<ChambreModel | null> => {
-        try {
-            return await this.chambresDal.create(ChambreData);
-        } catch (error: any) {
-            console.error(`Error creating chambre :`, error);
-            throw new Error(`An error occurred while fetching the chambre: ${error.message}`);
-        }
+    addChambre = async (chambre: ChambreInterface): Promise<void> => {
+        return await this.chambresDal.addChambre(chambre);
+    };
+
+    async updateChambre(chambre: ChambreInterface): Promise<void> {
+        return await this.chambresDal.updateChambre(chambre);
+    }
+
+    deleteChambre = async (chambreId: number): Promise<void> => {
+        return  await this.chambresDal.deleteChambre(chambreId);
     };
 }
 
