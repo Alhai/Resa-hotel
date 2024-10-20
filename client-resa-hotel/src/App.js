@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Home from './pages/Home';
 import Contact from './pages/Contact';
 import Login from './pages/Login';
+import Restaurant from './pages/Restaurant';
 
 const App = () => {
   return (
@@ -14,6 +15,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/Restaurant" element={<Restaurant />} />
+
         {/* Ajoute d'autres routes ici, comme /reservation et /restaurant */}
       </Routes>
       <Footer /> {/* Footer ajouté en bas */}

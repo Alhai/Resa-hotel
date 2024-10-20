@@ -1,5 +1,6 @@
 import React from 'react';
 import './Restaurant.css'; // Import a CSS file for styling
+
 import reastaurantDine from '../assets/images/restMain.jpg'; // Image de la dine
 
 // Image-gallary de la dine
@@ -23,12 +24,12 @@ const Restaurant: React.FC = () => {
         <div className="content">
           <div className="description">
             <h2>À Propos de Nous</h2>
+            <p>Bienvenue dans notre restaurant !</p>
             <p>
-              Bienvenue dans notre restaurant ! Nous offrons une variété de
-              plats délicieux préparés à partir des ingrédients les plus frais.
-              Nos chefs sont dédiés à vous offrir une expérience culinaire
-              inoubliable. Venez profiter de notre ambiance chaleureuse et de
-              notre service excellent !
+              Nous offrons une variété de plats délicieux préparés à partir des
+              ingrédients les plus frais. Nos chefs sont dédiés à vous offrir
+              une expérience culinaire inoubliable. Venez profiter de notre
+              ambiance chaleureuse et de notre service excellent !
             </p>
           </div>
 
