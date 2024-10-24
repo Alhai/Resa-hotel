@@ -1,6 +1,9 @@
 import express from 'express';
 import chambreRoutes from "./router/chambre.router";
 import userRouter from './router/user.router';
+import photoRouter from "./router/photo.router";
+import chambreRouter from "./router/chambre.router";
+import reservationRouter from "./router/reservationRouter";
 // const {
 //   TestLoginBDD,
 // } = require('./services/bdd');
@@ -10,12 +13,22 @@ const port = 3000;
 // import {Bdd} from '../bdd';
 app.use(express.json());
 
-app.use('/user', userRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+/** Appel de l'ensemble des routes des utilisateurs **/
+app.use('/user', userRouter);
+
+/** Appel de l'ensemble des routes des chambres **/
+app.use('/chambres', chambreRouter);
+
+/** Appel de l'ensemble des routes des photos **/
+app.use('/photos', photoRouter);
+
+/** Appel de l'ensemble des routes des reservations **/
+app.use('/reservations', reservationRouter);
 
 /** Test connexion BDD : **/
 /*app.get('/loginTest/:user', async (req, res) => {
@@ -28,10 +41,6 @@ app.get('/', (req, res) => {
     res.status(500).send(err);
   }
 });*/
-
-/** Récupération de l'ensemble des chambres **/
-app.use('/chambres', chambreRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
