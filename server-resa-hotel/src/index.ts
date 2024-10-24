@@ -3,7 +3,7 @@ import chambreRoutes from "./router/chambre.router";
 import userRouter from './router/user.router';
 import photoRouter from "./router/photo.router";
 import chambreRouter from "./router/chambre.router";
-import reservationRouter from "./router/reservationRouter";
+import reservationRouter from "./router/reservation.Router";
 // const {
 //   TestLoginBDD,
 // } = require('./services/bdd');
@@ -29,6 +29,9 @@ app.use('/photos', photoRouter);
 
 /** Appel de l'ensemble des routes des reservations **/
 app.use('/reservations', reservationRouter);
+
+/** Appel de l'ensemble des routes des hotels **/
+app.use('/hotels', hotelRouter);
 
 /** Test connexion BDD : **/
 /*app.get('/loginTest/:user', async (req, res) => {

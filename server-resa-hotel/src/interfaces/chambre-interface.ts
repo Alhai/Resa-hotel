@@ -10,7 +10,6 @@ export interface ChambreInterface {
 }
 
 export interface IChambreOperations {
-
     addChambre(chambre: ChambreInterface): Promise<void>;
     findAllChambres(): Promise<ChambreInterface[]>;
     findChambreById(chambreId: number): Promise<ChambreInterface | null>;
