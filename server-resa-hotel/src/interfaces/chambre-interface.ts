@@ -1,5 +1,3 @@
-import {IUser} from "./user-interface";
-
 export interface ChambreInterface {
     chambre_id?: number;
     hotel_id: number;
@@ -11,11 +9,11 @@ export interface ChambreInterface {
     is_available: boolean;
 }
 
-export interface IUserOperations {
+export interface IChambreOperations {
 
-    addChambre(user: IUser): Promise<void>;
-    findAllChambres(): Promise<IUser[]>;
-    findChambreById(userId: number): Promise<IUser | null>;
-    updateChambre(user: IUser): Promise<void>;
-    deleteChambre(userId: number): Promise<void>;
+    addChambre(chambre: ChambreInterface): Promise<void>;
+    findAllChambres(): Promise<ChambreInterface[]>;
+    findChambreById(chambreId: number): Promise<ChambreInterface | null>;
+    updateChambre(chambre: ChambreInterface): Promise<void>;
+    deleteChambre(chambreId: number): Promise<void>;
 }
