@@ -1,9 +1,9 @@
 import express from 'express';
-import chambreRoutes from "./router/chambre.router";
 import userRouter from './router/user.router';
 import photoRouter from "./router/photo.router";
 import chambreRouter from "./router/chambre.router";
-import reservationRouter from "./router/reservation.Router";
+import reservationRouter from "./router/reservation.router";
+import hotelRouter from "./router/hotel.router";
 // const {
 //   TestLoginBDD,
 // } = require('./services/bdd');
