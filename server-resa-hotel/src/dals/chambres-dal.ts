@@ -1,4 +1,3 @@
-/** Test accès à la BDD **/
 import { pool } from '../config/config';
 import {ChambreInterface} from '../interfaces/chambre-interface';
 

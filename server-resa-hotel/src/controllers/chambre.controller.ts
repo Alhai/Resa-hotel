@@ -53,10 +53,10 @@ export class ChambreController {
         try {
             const updatedChambre: ChambreInterface = { chambre_id: Number(id), hotel_id, num, type, description, size, price, is_available };
             await this.chambresService.updateChambre(updatedChambre);
-            res.status(200).json({ message: 'Utilisateur mis à jour avec succès' });
+            res.status(200).json({ message: 'Chambre mis à jour avec succès' });
         } catch (error) {
-            console.error('Erreur lors de la mise à jour de l’utilisateur :', error);
-            res.status(500).json({ error: 'Erreur lors de la mise à jour de l’utilisateur' });
+            console.error('Erreur lors de la mise à jour de la chambre :', error);
+            res.status(500).json({ error: 'Erreur lors de la mise à jour de la chambre' });
         }
     }
 
