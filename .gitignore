@@ -15,3 +15,5 @@ client-resa-hotel/node_modules/.cache/default-development/9.pack
 client-resa-hotel/node_modules/.cache/default-development/index.pack
 client-resa-hotel/node_modules/.cache/default-development/index.pack.old
 client-resa-hotel/src/assets/images/res_back3.jpg
+
+*.pack
