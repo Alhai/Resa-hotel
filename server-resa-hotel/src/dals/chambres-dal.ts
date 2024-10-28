@@ -10,7 +10,23 @@ export class ChambresDal {
 
         while (hasMoreData) {
             const offset = (page - 1) * limit;
-            const querySelectAllRoom = 'SELECT * FROM chambre LIMIT ? OFFSET ?';
+            const querySelectAllRoom = 'SELECT \n' +
+                '    chambre.chambre_id,\n' +
+                '    chambre.hotel_id,\n' +
+                '    chambre.num,\n' +
+                '    chambre.type,\n' +
+                '    chambre.description,\n' +
+                '    chambre.size,\n' +
+                '    chambre.price,\n' +
+                '    chambre.is_available,\n' +
+                '    photo.photo_id,\n' +
+                '    photo.url AS photo_url,\n' +
+                '    photo.description AS photo_description\n' +
+                'FROM \n' +
+                '    chambre\n' +
+                'LEFT JOIN \n' +
+                '    photo ON chambre.chambre_id = photo.chambre_id\n' +
+                'LIMIT ? OFFSET ?';
 
             try {
                 // Utiliser pool.promise() pour les Promises avec MySQL2
