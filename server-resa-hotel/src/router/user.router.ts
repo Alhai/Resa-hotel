@@ -23,6 +23,54 @@ userRouter.get('/', userController.getAllUsers.bind(userController));
 
 /**
  * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Connexion d'un utilisateur
+ *     tags: [Utilisateur]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: Nom de l’utilisateur
+ *                 example: user123
+ *               password:
+ *                 type: string
+ *                 description: Mot de passe de l’utilisateur
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Utilisateur connecté avec succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                   description: ID de l’utilisateur
+ *                 username:
+ *                   type: string
+ *                   description: Nom d'utilisateur
+ *                 email:
+ *                   type: string
+ *                   description: Email de l'utilisateur
+ *                 role:
+ *                   type: string
+ *                   description: Rôle de l'utilisateur
+ *       404:
+ *         description: Utilisateur non trouvé
+ *       401:
+ *         description: Mot de passe incorrect
+ */
+userRouter.post('/login', userController.loginUser.bind(userController));
+
+/**
+ * @swagger
  * /user/{id}:
  *   get:
  *     summary: Récupérer un utilisateur par ID
