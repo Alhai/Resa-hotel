@@ -68,8 +68,8 @@ const options: swaggerJsdoc.Options = {
                 },
                 required: ['chambre_id', 'url', 'alt'],
             },
+            apis: ['./src/router/*.ts'],
         },
-        apis: ['./src/router/*.ts'],
     },
 };
 
