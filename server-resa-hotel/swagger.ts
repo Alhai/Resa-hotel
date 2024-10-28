@@ -49,6 +49,16 @@ const options: swaggerJsdoc.Options = {
             },
             required: ['hotel_id', 'num', 'type', 'description', 'size', 'price', 'is_available'],
         },
+        Hotel: {
+            type: 'object',
+            properties: {
+                name: { type: 'string', description: "Nom de l'hôtel", example: 'Hotel de la Gare' },
+                city: { type: 'string', description: "Ville où se trouve l'hôtel", example: 'Grenoble' },
+                address: { type: 'string', description: "Adresse de l'hôtel", example: '12 rue des Colobin' },
+                description: { type: 'string', description: "Description de l'hôtel", example: 'Adresse au pif' },
+            },
+            required: ['name', 'city', 'address', 'description'],
+        },
         Photo: {
             type: 'object',
             properties: {
