@@ -1,6 +1,7 @@
 /** Test accès à la BDD **/
 import { pool } from '../config/config';
 import {PhotoInterface} from '../interfaces/photo-interface';
+import {IUser} from "../interfaces/user-interface";
 
 export class PhotosDal {
     async findAll(): Promise<PhotoInterface[]> {
@@ -37,6 +38,17 @@ export class PhotosDal {
         const result: any[] = rows as any[];
         if (result.length > 0) {
             return result[0] as PhotoInterface;
+        } else {
+            throw new Error(`la Photo avec l'ID ${photoId} non trouvé`);
+        }
+    }
+
+    async findByIdChambre(photoId: number): Promise<PhotoInterface[]> {
+        const querySelectPictureById = 'SELECT * FROM photo WHERE chambre_id = ?';
+        const [rows] = await pool.query(querySelectPictureById, [photoId]);
+        const result: any[] = rows as any[];
+        if (result.length > 0) {
+            return rows as PhotoInterface[];
         } else {
             throw new Error(`la Photo avec l'ID ${photoId} non trouvé`);
         }

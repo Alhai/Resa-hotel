@@ -13,6 +13,10 @@ export class PhotosService {
         return await this.photosDal.findById(id);
     };
 
+    getPhotoByIdChambre = async (id: number): Promise<PhotoInterface[]> => {
+        return await this.photosDal.findByIdChambre(id);
+    };
+
 
 
     addPhoto = async (Photo: PhotoInterface): Promise<void> => {

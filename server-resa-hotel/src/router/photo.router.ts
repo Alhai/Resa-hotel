@@ -11,6 +11,7 @@ const photoController = new PhotoController(photosService, pool);
 const photoRouter = Router();
 photoRouter.get('/', photoController.getAllPhotos.bind(photoController));
 photoRouter.get('/:id', photoController.getPhotoById.bind(photoController));
+photoRouter.get('/chambre/:idChambre', photoController.getPhotoByIdChambre.bind(photoController));
 photoRouter.post('/', photoController.addPhoto.bind(photoController));
 photoRouter.put('/:id', photoController.updatePhoto.bind(photoController));
 photoRouter.delete('/:id', photoController.deletePhoto.bind(photoController));

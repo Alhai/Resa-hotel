@@ -32,6 +32,20 @@ export class PhotoController {
         }
     };
 
+    getPhotoByIdChambre = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const photo = await this.photosService.getPhotoByIdChambre(Number(req.params.idChambre));
+            if (!photo) {
+                res.status(404).json({message: 'photo not found'});
+            } else {
+                res.status(200).json(photo);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération de la photo :', error);
+            res.status(500).json({ error: 'Erreur lors de la récupération de la photo' });
+        }
+    };
+
     addPhoto = async (req: Request, res: Response): Promise<void> => {
         const {chambre_id, url, alt}: PhotoInterface = req.body;
 
