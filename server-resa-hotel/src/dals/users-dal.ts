@@ -66,14 +66,14 @@ export class UserDal {
     }
 
 
-    async loginUser(username: string, mdp: string): Promise<IUser> {
-        const queryCheckUsername = 'SELECT * FROM user WHERE username = ?';
+    async loginUser(email: string, mdp: string): Promise<IUser> {
+        const queryCheckUsername = 'SELECT * FROM user WHERE email = ?';
 
         try {
-            const [rows]: any = await pool.query(queryCheckUsername, [username]);
+            const [rows]: any = await pool.query(queryCheckUsername, [email]);
             if (rows.length === 0) {
                 // Aucun utilisateur trouvé avec le pseudo fourni
-                throw new Error(`Nom d'utilisateur incorrect`);
+                throw new Error(`Email d'utilisateur incorrect`);
             }
 
             const user = rows[0];

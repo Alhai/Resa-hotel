@@ -34,14 +34,14 @@ userRouter.get('/', userController.getAllUsers.bind(userController));
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *                 description: Nom de l’utilisateur
- *                 example: user123
+ *                 example: toto3@gmail.com
  *               password:
  *                 type: string
  *                 description: Mot de passe de l’utilisateur
- *                 example: password123
+ *                 example: toto3
  *     responses:
  *       200:
  *         description: Utilisateur connecté avec succès

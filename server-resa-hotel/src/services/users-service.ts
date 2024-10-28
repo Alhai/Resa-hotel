@@ -24,7 +24,7 @@ export class UserService {
     async deleteUser(userId: number): Promise<void> {
         return await this.userDal.deleteUser(userId);
     }
-    async loginUser(username: string, mdp: string):  Promise<IUser> {
-        return await this.userDal.loginUser(username, mdp);
+    async loginUser(email: string, mdp: string):  Promise<IUser> {
+        return await this.userDal.loginUser(email, mdp);
     }
 }
