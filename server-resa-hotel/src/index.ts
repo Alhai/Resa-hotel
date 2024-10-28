@@ -1,9 +1,11 @@
-import express from 'express';
-import userRouter from './router/user.router';
-import photoRouter from "./router/photo.router";
+import { swaggerSpecs, swaggerUi } from "../swagger";
+
 import chambreRouter from "./router/chambre.router";
-import reservationRouter from "./router/reservation.router";
+import express from 'express';
 import hotelRouter from "./router/hotel.router";
+import photoRouter from "./router/photo.router";
+import reservationRouter from "./router/reservation.router";
+import userRouter from './router/user.router';
 // const {
 //   TestLoginBDD,
 // } = require('./services/bdd');
@@ -13,6 +15,7 @@ const port = 3000;
 // import {Bdd} from '../bdd';
 app.use(express.json());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -44,6 +47,7 @@ app.use('/hotels', hotelRouter);
     res.status(500).send(err);
   }
 });*/
+
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
