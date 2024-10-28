@@ -14,7 +14,7 @@ const userRouter = Router();
  * /user:
  *   get:
  *     summary: Récupérer tous les utilisateurs
- *     tags: [User]
+ *     tags: [Utilisateur]
  *     responses:
  *       200:
  *         description: Liste des utilisateurs
@@ -26,7 +26,7 @@ userRouter.get('/', userController.getAllUsers.bind(userController));
  * /user/{id}:
  *   get:
  *     summary: Récupérer un utilisateur par ID
- *     tags: [User]
+ *     tags: [Utilisateur]
  *     parameters:
  *       - in: path
  *         name: id
@@ -47,7 +47,7 @@ userRouter.get('/:id', userController.getUserById.bind(userController));
  * /user:
  *   post:
  *     summary: Ajouter un nouvel utilisateur
- *     tags: [User]
+ *     tags: [Utilisateur]
  *     requestBody:
  *       required: true
  *       content:
@@ -67,7 +67,7 @@ userRouter.post('/', userController.addUser.bind(userController));
  * /user/{id}:
  *   put:
  *     summary: Mettre à jour un utilisateur existant
- *     tags: [User]
+ *     tags: [Utilisateur]
  *     parameters:
  *       - in: path
  *         name: id
@@ -96,7 +96,7 @@ userRouter.put('/:id', userController.updateUser.bind(userController));
  * /user/{id}:
  *   delete:
  *     summary: Supprimer un utilisateur
- *     tags: [User]
+ *     tags: [Utilisateur]
  *     parameters:
  *       - in: path
  *         name: id
