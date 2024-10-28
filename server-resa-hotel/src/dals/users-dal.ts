@@ -8,13 +8,17 @@ export class UserDal {
 
     async addUser(user: IUser): Promise<void> {
         const query = `
-            INSERT INTO user (username, email, password, role)
-            VALUES (?, ?, ?, ?)
-        `;
+        INSERT INTO user (username, email, password, role)
+        VALUES (?, ?, ?, ?)
+    `;
+
+        // Hacher le mot de passe avec un "salt" (nombre de tours ici fixé à 10 pour l'exemple)
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+
         const values = [
             user.username,
             user.email,
-            user.password,
+            hashedPassword, // Utiliser le mot de passe haché
             user.role || 'client',
         ];
 
@@ -62,31 +66,30 @@ export class UserDal {
     }
 
 
-    async loginUser(pseudo: string, mdp: string): Promise<IUser | string> {
-        const queryCheckPseudo = 'SELECT * FROM user WHERE username = ?';
+    async loginUser(username: string, mdp: string): Promise<IUser> {
+        const queryCheckUsername = 'SELECT * FROM user WHERE username = ?';
 
         try {
-            const [rows]: any[] = await pool.query(queryCheckPseudo, [pseudo]);
+            const [rows]: any = await pool.query(queryCheckUsername, [username]);
             if (rows.length === 0) {
                 // Aucun utilisateur trouvé avec le pseudo fourni
-                return 'pseudo_incorrect';
+                throw new Error(`Nom d'utilisateur incorrect`);
             }
 
             const user = rows[0];
-            const isPasswordMatch = await bcrypt.compare(mdp, user.mdp);
+            const isPasswordMatch = await bcrypt.compare(mdp, user.password); // `user.password` est le nom correct de la colonne
 
             if (!isPasswordMatch) {
-                // Le mot de passe ne correspond pas
-                return 'psw_incorrect';
+                throw new Error(`Mot de passe incorrect`);
             }
 
             return {
                 id: user.user_id,
                 username: user.username,
-                password: '',
+                password: '', // On retourne un mot de passe vide pour la sécurité
                 email: user.email,
                 role: user.role,
-                createdAt: user.createdAt
+                createdAt: user.created_at
             };
         } catch (error) {
             throw new Error(`Erreur lors de la connexion de l'utilisateur : ${(error as Error).message}`);
