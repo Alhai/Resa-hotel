@@ -43,17 +43,17 @@ export class ReservationsDal {
     }
 
     async addReservation(reservation: ReservationInterface): Promise<void> {
-        const queryAddReservation = 'INSERT INTO reservation (user_id, chambre_id, start_date, end_date, status, created_at) VALUES (?, ?, ?, ?, ?)';
+        const queryAddReservation = 'INSERT INTO reservation (user_id, chambre_id, start_date, end_date, status) VALUES (?, ?, ?, ?, ?)';
 
         await pool.query(queryAddReservation, [
             reservation.user_id,
             reservation.chambre_id,
             reservation.start_date,
             reservation.end_date,
-            reservation.status,
-            reservation.created_at
+            reservation.status
         ]);
     }
+
 
     async updateReservation(reservation: ReservationInterface): Promise<void> {
         const query = `
