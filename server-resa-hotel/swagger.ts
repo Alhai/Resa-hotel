@@ -15,12 +15,12 @@ const options: swaggerJsdoc.Options = {
                 User: {
                     type: 'object',
                     properties: {
-                        id: { type: 'integer', description: "ID de l'utilisateur", example: 1 },
+                        id: { type: 'integer', description: "ID de l'utilisateur" },
                         username: { type: 'string', description: "Nom d'utilisateur", example: 'toto' },
                         password: { type: 'string', description: "Mot de passe de l'utilisateur", example: 'azerty' },
                         email: { type: 'string', description: "Email de l'utilisateur", example: 'toto@example.com' },
                         role: { type: 'string', description: "Rôle de l'utilisateur", example: 'user', nullable: true },
-                        createdAt: { type: 'string', format: 'date-time', description: "Date de création de l'utilisateur", example: '2023-10-28T14:48:00.000Z', nullable: true },
+                        createdAt: { type: 'string', format: 'date-time', description: "Date de création de l'utilisateur", nullable: true },
                     },
                     required: ['username', 'password', 'email'],
                 },
