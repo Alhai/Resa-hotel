@@ -5,27 +5,26 @@ export class UserDal {
     constructor() { }
     async addUser(user: IUser): Promise<void> {
         const query = `
-            INSERT INTO User (username, email, password, role, created_at)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT INTO user (username, email, password, role)
+            VALUES (?, ?, ?, ?)
         `;
         const values = [
             user.username,
             user.email,
             user.password,
-            user.role || 'client',  
-            new Date() 
+            user.role || 'client',
         ];
 
         await pool.query(query, values);
     }
     async getAllUsers(): Promise<IUser[]> {
-        const query = "SELECT * FROM User";
+        const query = "SELECT * FROM user";
         const [rows] = await pool.query(query);
         return rows as IUser[];
     }
 
     async getUserById(userId: number): Promise<IUser> {
-        const query = "SELECT * FROM User WHERE user_id = ?";
+        const query = "SELECT * FROM user WHERE user_id = ?";
         const [rows] = await pool.query(query, [userId]);
         const result: any[] = rows as any[];
         if (result.length > 0) {
@@ -37,7 +36,7 @@ export class UserDal {
 
     async updateUser(user: IUser): Promise<void> {
         const query = `
-            UPDATE User
+            UPDATE user
             SET username = ?, email = ?, password = ?, role = ?
             WHERE user_id = ?
         `;
@@ -54,7 +53,7 @@ export class UserDal {
 
 
     async deleteUser(userId: number): Promise<void> {
-        const query = "DELETE FROM User WHERE user_id = ?";
+        const query = "DELETE FROM user WHERE user_id = ?";
         await pool.query(query, [userId]);
     }
 }
