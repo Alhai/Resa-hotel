@@ -71,4 +71,17 @@ export class UserController {
         }
     }
 
+    async loginUser(req: Request, res: Response): Promise<void> {
+        try {
+            const user = await this.userService.loginUser(req.params.username,req.params.mdp);
+            if (!user) {
+                res.status(404).json({ message: 'Echec de la connexion' });
+            } else {
+                res.status(200).json(user);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la connexion de l’utilisateur :', error);
+            res.status(500).json({ error: 'Erreur lors de la connexion de l’utilisateur' });
+        }
+    }
 }

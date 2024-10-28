@@ -8,8 +8,8 @@ export class UserDal {
 
     async addUser(user: IUser): Promise<void> {
         const query = `
-        INSERT INTO User (username, email, password, role, created_at)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO user (username, email, password, role)
+        VALUES (?, ?, ?, ?)
     `;
 
         // Hacher le mot de passe avec un "salt" (nombre de tours ici fixé à 10 pour l'exemple)
@@ -20,20 +20,19 @@ export class UserDal {
             user.email,
             hashedPassword, // Utiliser le mot de passe haché
             user.role || 'client',
-            new Date()
         ];
 
         await pool.query(query, values);
     }
 
     async getAllUsers(): Promise<IUser[]> {
-        const query = "SELECT * FROM User";
+        const query = "SELECT * FROM user";
         const [rows] = await pool.query(query);
         return rows as IUser[];
     }
 
     async getUserById(userId: number): Promise<IUser> {
-        const query = "SELECT * FROM User WHERE user_id = ?";
+        const query = "SELECT * FROM user WHERE user_id = ?";
         const [rows] = await pool.query(query, [userId]);
         const result: any[] = rows as any[];
         if (result.length > 0) {
@@ -45,7 +44,7 @@ export class UserDal {
 
     async updateUser(user: IUser): Promise<void> {
         const query = `
-            UPDATE User
+            UPDATE user
             SET username = ?, email = ?, password = ?, role = ?
             WHERE user_id = ?
         `;
@@ -62,36 +61,35 @@ export class UserDal {
 
 
     async deleteUser(userId: number): Promise<void> {
-        const query = "DELETE FROM User WHERE user_id = ?";
+        const query = "DELETE FROM user WHERE user_id = ?";
         await pool.query(query, [userId]);
     }
 
 
-    async loginUser(pseudo: string, mdp: string): Promise<IUser | string> {
-        const queryCheckPseudo = 'SELECT * FROM user WHERE username = ?';
+    async loginUser(username: string, mdp: string): Promise<IUser> {
+        const queryCheckUsername = 'SELECT * FROM user WHERE username = ?';
 
         try {
-            const [rows]: any[] = await pool.query(queryCheckPseudo, [pseudo]);
+            const [rows]: any = await pool.query(queryCheckUsername, [username]);
             if (rows.length === 0) {
                 // Aucun utilisateur trouvé avec le pseudo fourni
-                return 'pseudo_incorrect';
+                throw new Error(`Nom d'utilisateur incorrect`);
             }
 
             const user = rows[0];
-            const isPasswordMatch = await bcrypt.compare(mdp, user.mdp);
+            const isPasswordMatch = await bcrypt.compare(mdp, user.password); // `user.password` est le nom correct de la colonne
 
             if (!isPasswordMatch) {
-                // Le mot de passe ne correspond pas
-                return 'psw_incorrect';
+                throw new Error(`Mot de passe incorrect`);
             }
 
             return {
                 id: user.user_id,
                 username: user.username,
-                password: '',
+                password: '', // On retourne un mot de passe vide pour la sécurité
                 email: user.email,
                 role: user.role,
-                createdAt: user.createdAt
+                createdAt: user.created_at
             };
         } catch (error) {
             throw new Error(`Erreur lors de la connexion de l'utilisateur : ${(error as Error).message}`);

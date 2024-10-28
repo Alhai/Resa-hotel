@@ -10,6 +10,7 @@ const userController = new UserController(userService, pool);
 const userRouter = Router();
 userRouter.get('/', userController.getAllUsers.bind(userController));
 userRouter.get('/:id', userController.getUserById.bind(userController));
+userRouter.get('/:username/:mdp', userController.loginUser.bind(userController));
 userRouter.post('/', userController.addUser.bind(userController));
 userRouter.put('/:id', userController.updateUser.bind(userController));
 userRouter.delete('/:id', userController.deleteUser.bind(userController));
