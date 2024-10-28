@@ -25,16 +25,16 @@ app.get('/', (req, res) => {
 app.use('/user', userRouter);
 
 /** Appel de l'ensemble des routes des chambres **/
-app.use('/chambres', chambreRouter);
+app.use('/chambre', chambreRouter);
 
 /** Appel de l'ensemble des routes des photos **/
-app.use('/photos', photoRouter);
+app.use('/photo', photoRouter);
 
 /** Appel de l'ensemble des routes des reservations **/
-app.use('/reservations', reservationRouter);
+app.use('/reservation', reservationRouter);
 
 /** Appel de l'ensemble des routes des hotels **/
-app.use('/hotels', hotelRouter);
+app.use('/hotel', hotelRouter);
 
 /** Test connexion BDD : **/
 /*app.get('/loginTest/:user', async (req, res) => {
