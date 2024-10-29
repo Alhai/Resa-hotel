@@ -9,65 +9,37 @@ export class ChambresDal {
     async findAll(): Promise<ChambreInterface[]> {
         let page = 1;
         const limit = 10;
+        let allRows: ChambreInterface[] = [];
         let hasMoreData = true;
-        const allRoomsMap: { [key: number]: ChambreInterface & { photos: { photo_id: number; url: string; description: string }[] } } = {};
 
         while (hasMoreData) {
             const offset = (page - 1) * limit;
-            const querySelectAllRoom = `
-            SELECT 
-                chambre.chambre_id,
-                chambre.hotel_id,
-                chambre.num,
-                chambre.type,
-                chambre.description,
-                chambre.size,
-                chambre.price,
-                chambre.is_available,
-                photo.photo_id,
-                photo.url AS photo_url,
-                photo.description AS photo_description
-            FROM 
-                chambre
-            LEFT JOIN 
-                photo ON chambre.chambre_id = photo.chambre_id
-            LIMIT ? OFFSET ?
-        `;
+            const querySelectAllRoom = 'SELECT \n' +
+                '    chambre.chambre_id,\n' +
+                '    chambre.hotel_id,\n' +
+                '    chambre.num,\n' +
+                '    chambre.type,\n' +
+                '    chambre.description,\n' +
+                '    chambre.size,\n' +
+                '    chambre.price,\n' +
+                '    chambre.is_available,\n' +
+                '    photo.photo_id,\n' +
+                '    photo.url AS photo_url,\n' +
+                '    photo.description AS photo_description\n' +
+                'FROM \n' +
+                '    chambre\n' +
+                'LEFT JOIN \n' +
+                '    photo ON chambre.chambre_id = photo.chambre_id\n' +
+                'LIMIT ? OFFSET ?';
 
             try {
-                const [rows]: any[] = await pool.query(querySelectAllRoom, [limit, offset]);
+                const [rows]: any = await pool.query(querySelectAllRoom, [limit, offset]);
 
                 if (rows.length > 0) {
-                    rows.forEach((row: any) => {
-                        const chambreId = row.chambre_id;
-
-                        // Si la chambre n'existe pas encore dans le map, on l'ajoute
-                        if (!allRoomsMap[chambreId]) {
-                            allRoomsMap[chambreId] = {
-                                chambre_id: row.chambre_id,
-                                hotel_id: row.hotel_id,
-                                num: row.num,
-                                type: row.type,
-                                description: row.description,
-                                size: row.size,
-                                price: row.price,
-                                is_available: row.is_available,
-                                photos: []
-                            };
-                        }
-
-                        // Ajout de la photo dans le tableau des photos de la chambre
-                        if (row.photo_id) {
-                            allRoomsMap[chambreId].photos.push({
-                                photo_id: row.photo_id,
-                                url: row.photo_url,
-                                description: row.photo_description
-                            });
-                        }
-                    });
+                    allRows = allRows.concat(rows);
                     page++;
                 } else {
-                    hasMoreData = false; // Arrêter si aucune donnée n'est retournée
+                    hasMoreData = false;
                 }
             } catch (error: any) {
                 console.error('Error fetching rooms:', error);
@@ -75,8 +47,7 @@ export class ChambresDal {
             }
         }
 
-        // Convertir la map en tableau pour le retour
-        return Object.values(allRoomsMap);
+        return allRows;
     }
 
     async findById(chambreId: number): Promise<ChambreInterface | null> {
