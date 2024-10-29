@@ -53,7 +53,7 @@ export class HotelDal {
     }
 
     async updateHotel(hotel: HotelInterface): Promise<void> {
-        const query = `UPDATE Hotel SET name = ?, city = ?, address = ?, description = WHERE Hotel_id = ?`;
+        const query = `UPDATE Hotel SET name = ?, city = ?, address = ?, description = ? WHERE hotel_id = ?`;
         const values = [
             hotel.name,
             hotel.city,
