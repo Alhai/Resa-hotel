@@ -11,7 +11,7 @@ import userRouter from './router/user.router';
 // } = require('./services/bdd');
 
 const app = express();
-const port = 3001;
+const port = 3000;
 // import {Bdd} from '../bdd';
 app.use(express.json());
 

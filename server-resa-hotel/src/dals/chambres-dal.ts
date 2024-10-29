@@ -1,7 +1,11 @@
 import { pool } from '../config/config';
 import {ChambreInterface} from '../interfaces/chambre-interface';
+import {PhotosDal} from "./photos-dal";
 
 export class ChambresDal {
+    constructor(private photosDal:PhotosDal) {
+    }
+
     async findAll(): Promise<ChambreInterface[]> {
         let page = 1;
         const limit = 10;
@@ -110,7 +114,14 @@ export class ChambresDal {
     }
     async deleteChambre(chambreId: number): Promise<void> {
         console.log(chambreId);
-        const querySelectRoomById = 'DELETE FROM chambre WHERE chambre_id = ?';
-        await pool.query(querySelectRoomById, [chambreId]);
+        const querySelectPhotoByIdChambre = 'SELECT photo_id FROM photo WHERE chambre_id = ?';
+        const [rows]: any = await pool.query(querySelectPhotoByIdChambre, [chambreId]);
+
+        for (let i = 0; i < rows.length; i++) {
+            await this.photosDal.deletePhoto(rows[i]);
+        }
+
+        const queryDeleteRoomById = 'DELETE FROM chambre WHERE chambre_id = ?';
+        await pool.query(queryDeleteRoomById, [chambreId]);
     }
 }

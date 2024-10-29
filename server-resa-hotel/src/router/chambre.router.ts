@@ -4,8 +4,9 @@ import { ChambresDal } from "../dals/chambres-dal";
 import { ChambresService } from "../services/chambres-service";
 import { Router } from 'express';
 import { pool } from "../config/config";
+import {PhotosDal} from "../dals/photos-dal";
 
-const chambreService = new ChambresService(new ChambresDal());
+const chambreService = new ChambresService(new ChambresDal(new PhotosDal()));
 const chambreController = new ChambreController(chambreService, pool);
 
 const chambreRouter = Router();

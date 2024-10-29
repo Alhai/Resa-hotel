@@ -5,7 +5,7 @@ export interface ReservationInterface {
     start_date: string;
     end_date: string;
     status: number;
-    created_at: number;
+    created_at: string;
 }
 
 export interface IReservationOperations {

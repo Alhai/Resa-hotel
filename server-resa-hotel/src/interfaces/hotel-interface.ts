@@ -1,9 +1,9 @@
 export interface HotelInterface {
     hotel_id?: number;
-    name: number;
+    name: string;
     city: string;
     address: string;
-    description: number;
+    description: string;
 }
 
 export interface IHotelOperations {
